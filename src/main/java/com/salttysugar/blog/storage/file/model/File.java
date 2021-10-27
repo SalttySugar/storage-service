@@ -8,19 +8,22 @@ import java.nio.file.Path;
 public interface File {
     String getId();
 
-    void setId();
+    void setId(String id);
 
-    Byte[] getContent();
+    String getName();
 
-    void setContent(Byte content);
+    void setName(String name);
+
+    byte[] getContent() throws IOException;
+
+    void setContent(byte[] content) throws IOException;
 
     Path getPath();
 
     void setPath(Path path);
 
-    long getSize();
+    long getSize() throws IOException;
 
-    void setSize(long size);
 
     FileType getType();
 

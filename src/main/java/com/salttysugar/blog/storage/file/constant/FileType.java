@@ -12,6 +12,4 @@ public enum FileType {
 
     @Getter
     private final String type;
-
-
 }

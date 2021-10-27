@@ -10,7 +10,7 @@ import java.util.function.Function;
 public class Converter {
     private final ConversionService service;
 
-    public Converter(@Qualifier("mvcConversionService") ConversionService service) {
+    public Converter(@Qualifier("webFluxConversionService") ConversionService service) {
         this.service = service;
     }
 
