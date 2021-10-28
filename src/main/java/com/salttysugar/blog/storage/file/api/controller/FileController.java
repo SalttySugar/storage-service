@@ -1,7 +1,8 @@
-package com.salttysugar.blog.storage.file;
+package com.salttysugar.blog.storage.file.api.controller;
 
 import com.salttysugar.blog.storage.common.Converter;
 import com.salttysugar.blog.storage.common.constant.API;
+import com.salttysugar.blog.storage.file.api.dto.FileDTO;
 import com.salttysugar.blog.storage.file.model.File;
 import com.salttysugar.blog.storage.file.service.ReactiveFileService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

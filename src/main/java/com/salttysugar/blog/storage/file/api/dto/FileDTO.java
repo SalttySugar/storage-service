@@ -1,4 +1,4 @@
-package com.salttysugar.blog.storage.file;
+package com.salttysugar.blog.storage.file.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

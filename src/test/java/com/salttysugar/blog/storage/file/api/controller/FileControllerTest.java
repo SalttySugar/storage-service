@@ -1,4 +1,4 @@
-package com.salttysugar.blog.storage.file;
+package com.salttysugar.blog.storage.file.api.controller;
 
 import com.salttysugar.blog.storage.common.constant.API;
 import org.junit.jupiter.api.Test;
