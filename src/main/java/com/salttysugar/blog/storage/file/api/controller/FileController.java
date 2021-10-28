@@ -1,9 +1,10 @@
 package com.salttysugar.blog.storage.file.api.controller;
 
-import com.salttysugar.blog.storage.common.Converter;
+import com.salttysugar.blog.storage.common.ApplicationConverter;
 import com.salttysugar.blog.storage.common.constant.API;
+import com.salttysugar.blog.storage.file.ApplicationReactiveFileWriter;
 import com.salttysugar.blog.storage.file.api.dto.FileDTO;
-import com.salttysugar.blog.storage.file.model.File;
+import com.salttysugar.blog.storage.file.model.ApplicationFile;
 import com.salttysugar.blog.storage.file.service.ReactiveFileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -19,7 +20,8 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class FileController {
     private final ReactiveFileService service;
-    private final Converter converter;
+    private final ApplicationConverter converter;
+    private final ApplicationReactiveFileWriter<FilePart> writer;
 
     @GetMapping
     public Flux<FileDTO> list() {
@@ -36,7 +38,7 @@ public class FileController {
     @GetMapping("/{id}")
     public Mono<Resource> retrieve(@PathVariable String id) {
         return service.getFileById(id)
-                .map(File::getPath)
+                .map(ApplicationFile::getPath)
                 .map(FileSystemResource::new);
     }
 
@@ -44,6 +46,7 @@ public class FileController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<FileDTO> upload(@RequestPart("file") Mono<FilePart> part) {
          return part
+                 .flatMap(writer::write)
                  .flatMap(service::save)
                  .map(converter.convert(FileDTO.class));
     }

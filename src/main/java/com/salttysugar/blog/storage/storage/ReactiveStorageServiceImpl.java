@@ -1,8 +1,6 @@
 package com.salttysugar.blog.storage.storage;
 
-import com.salttysugar.blog.storage.file.service.ReactiveFileService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class ReactiveStorageServiceImpl implements ReactiveStorageService {
-    private final StorageProperties properties;
+    private final StorageConfig properties;
 
     @Override
     public Mono<Path> store(FilePart part) {

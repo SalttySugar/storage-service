@@ -14,7 +14,7 @@ import java.nio.file.Path;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileImpl implements File {
+public class ApplicationFileImpl implements ApplicationFile {
     String id;
     String name;
     FileType type;

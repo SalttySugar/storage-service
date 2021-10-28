@@ -5,10 +5,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-@Getter
+import java.nio.file.Path;
+
 @Configuration
 @PropertySource(value = "classpath:application.yml")
-public class StorageProperties {
+public class StorageConfigPropertiesImpl implements StorageConfig {
     @Value("${folder}")
     String folder;
+
+    @Override
+    public Path getFolder() {
+        return Path.of(folder);
+    }
 }

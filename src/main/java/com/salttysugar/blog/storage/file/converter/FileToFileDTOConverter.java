@@ -2,17 +2,17 @@ package com.salttysugar.blog.storage.file.converter;
 
 import com.salttysugar.blog.storage.common.constant.API;
 import com.salttysugar.blog.storage.file.api.dto.FileDTO;
-import com.salttysugar.blog.storage.file.model.File;
+import com.salttysugar.blog.storage.file.model.ApplicationFile;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FileToFileDTOConverter implements Converter<File, FileDTO> {
+public class FileToFileDTOConverter implements Converter<ApplicationFile, FileDTO> {
 
     @SneakyThrows
     @Override
-    public FileDTO convert(File source) {
+    public FileDTO convert(ApplicationFile source) {
         return FileDTO.builder()
                 .id(source.getId())
                 .name(source.getName())

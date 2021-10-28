@@ -7,4 +7,7 @@ import java.nio.file.Path;
 
 public interface StorageService {
     Path store(MultipartFile file) throws IOException;
+    default Path store(String name, byte[] data) {
+        return Path.of("hello");
+    }
 }

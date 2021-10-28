@@ -5,7 +5,7 @@ import com.salttysugar.blog.storage.file.constant.FileType;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public interface File {
+public interface ApplicationFile {
     String getId();
 
     void setId(String id);

@@ -12,7 +12,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class StorageServiceImpl implements StorageService {
-    private final StorageProperties properties;
+    private final StorageConfig properties;
 
     @Override
     public Path store(MultipartFile file) throws IOException {
