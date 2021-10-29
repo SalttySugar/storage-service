@@ -25,7 +25,7 @@ public class FileToApplicationFileWriter implements Writer<File, Mono<Applicatio
 
     @Override
     public Mono<ApplicationFile> write(File source) {
-        return Mono.just(config.resolve(UUID.randomUUID() + source.getName()))
+        return Mono.just(config.getFolder().resolve(UUID.randomUUID() + source.getName()))
                 .flatMap(path -> toMonoTry(() -> Files.copy(source.toPath(), path)))
                 .map(Try::toEither)
                 .flatMap(FunctionalUtils::monoFromEither)

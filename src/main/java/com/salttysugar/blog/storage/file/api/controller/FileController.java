@@ -7,9 +7,12 @@ import com.salttysugar.blog.storage.file.api.dto.FileDTO;
 import com.salttysugar.blog.storage.file.model.ApplicationFile;
 import com.salttysugar.blog.storage.file.service.ReactiveFileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -36,10 +39,15 @@ public class FileController {
     }
 
     @GetMapping("/{id}")
-    public Mono<Resource> retrieve(@PathVariable String id) {
+    public Mono<ResponseEntity<Resource>> retrieve(@PathVariable String id) {
         return service.getFileById(id)
                 .map(ApplicationFile::getPath)
-                .map(FileSystemResource::new);
+                .map(FileSystemResource::new)
+                .map(resource -> ResponseEntity.ok()
+                        //.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename() + "\"")
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource)
+                );
     }
 
 

@@ -20,6 +20,10 @@ public class ApplicationFileImpl implements ApplicationFile {
     FileType type;
     Path path;
 
+    @Override
+    public Path getPath() {
+        return this.path;
+    }
 
     @Override
     public byte[] getContent() throws IOException {

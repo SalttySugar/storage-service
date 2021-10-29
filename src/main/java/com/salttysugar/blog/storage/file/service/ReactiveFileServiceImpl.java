@@ -5,6 +5,7 @@ import com.salttysugar.blog.storage.file.model.ApplicationFile;
 import com.salttysugar.blog.storage.file.persistance.MongoFile;
 import com.salttysugar.blog.storage.file.persistance.MongoFileRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,12 +19,13 @@ public class ReactiveFileServiceImpl implements ReactiveFileService {
 
     @Override
     public Mono<ApplicationFile> getFileById(String id) {
-        return null;
+        return repository.findById(id)
+                .map(converter.convert(ApplicationFile.class));
     }
 
     @Override
     public Mono<ApplicationFile> getFileByName(String name) {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.salttysugar.blog.storage.file.exception;
+package com.salttysugar.blog.storage.file.core.filetype.exception;
 
 public class UnknownFileTypeException extends RuntimeException {
     public UnknownFileTypeException() {
