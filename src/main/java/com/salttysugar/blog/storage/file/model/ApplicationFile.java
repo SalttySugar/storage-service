@@ -28,4 +28,5 @@ public interface ApplicationFile {
     FileType getType();
 
     void setType(FileType type);
+
 }
