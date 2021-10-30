@@ -1,7 +1,7 @@
 package com.salttysugar.blog.storage.file.core.writer.impl;
 
 import com.salttysugar.blog.storage.common.FunctionalUtils;
-import com.salttysugar.blog.storage.file.core.filetype.FileTypeResolutionManager;
+import com.salttysugar.blog.storage.file.core.resolver.filetype.FileTypeResolver;
 import com.salttysugar.blog.storage.file.core.writer.Writer;
 import com.salttysugar.blog.storage.file.model.ApplicationFile;
 import com.salttysugar.blog.storage.file.model.ApplicationFileImpl;
@@ -21,7 +21,7 @@ import static com.salttysugar.blog.storage.common.FunctionalUtils.toMonoTry;
 @RequiredArgsConstructor
 public class FileToApplicationFileWriter implements Writer<File, Mono<ApplicationFile>> {
     private final StorageConfig config;
-    private final FileTypeResolutionManager fileTypeResolver;
+    private final FileTypeResolver fileTypeResolver;
 
     @Override
     public Mono<ApplicationFile> write(File source) {
@@ -30,7 +30,7 @@ public class FileToApplicationFileWriter implements Writer<File, Mono<Applicatio
                 .map(Try::toEither)
                 .flatMap(FunctionalUtils::monoFromEither)
                 .map(path -> ApplicationFileImpl.builder()
-                        .type(fileTypeResolver.resolve(path.getFileName().toString()))
+                        .type(fileTypeResolver.resolve(path))
                         .name(path.getFileName().toString())
                         .path(path)
                         .build()

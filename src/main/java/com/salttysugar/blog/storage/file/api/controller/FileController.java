@@ -2,6 +2,7 @@ package com.salttysugar.blog.storage.file.api.controller;
 
 import com.salttysugar.blog.storage.common.ApplicationConverter;
 import com.salttysugar.blog.storage.common.constant.API;
+import com.salttysugar.blog.storage.file.core.resolver.mediatype.MediaTypeResolver;
 import com.salttysugar.blog.storage.file.core.writer.Writer;
 import com.salttysugar.blog.storage.file.api.dto.FileDTO;
 import com.salttysugar.blog.storage.file.model.ApplicationFile;
@@ -25,6 +26,7 @@ public class FileController {
     private final ReactiveFileService service;
     private final ApplicationConverter converter;
     private final Writer<FilePart, Mono<ApplicationFile>> writer;
+    private final MediaTypeResolver mediaTypeResolver;
 
     @GetMapping
     public Flux<FileDTO> list() {
@@ -41,13 +43,18 @@ public class FileController {
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Resource>> retrieve(@PathVariable String id) {
         return service.getFileById(id)
-                .map(ApplicationFile::getPath)
-                .map(FileSystemResource::new)
-                .map(resource -> ResponseEntity.ok()
-                        //.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resource.getFilename() + "\"")
-                        .contentType(MediaType.IMAGE_JPEG)
-                        .body(resource)
-                );
+                .map(applicationFile -> {
+                    var path = applicationFile.getPath();
+                    var fileType = applicationFile.getType();
+                    var resource = new FileSystemResource(path);
+                    var contentType = mediaTypeResolver.resolve(fileType)
+                            .orElseThrow(() -> new RuntimeException("Could not retrieve file type"));
+
+                    return ResponseEntity.ok()
+                            .contentType(contentType)
+                            .body(resource);
+
+                });
     }
 
 
