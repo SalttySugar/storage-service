@@ -1,6 +1,6 @@
 package com.salttysugar.blog.storage.file.converter;
 
-import com.salttysugar.blog.storage.file.model.ApplicationFile;
+import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
 import com.salttysugar.blog.storage.file.persistance.MongoFile;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;

@@ -3,8 +3,8 @@ package com.salttysugar.blog.storage.file.core.writer.impl;
 import com.salttysugar.blog.storage.common.FunctionalUtils;
 import com.salttysugar.blog.storage.file.core.resolver.filetype.FileTypeResolver;
 import com.salttysugar.blog.storage.file.core.writer.Writer;
-import com.salttysugar.blog.storage.file.model.ApplicationFile;
-import com.salttysugar.blog.storage.file.model.ApplicationFileImpl;
+import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
+import com.salttysugar.blog.storage.file.domain.model.ApplicationFileImpl;
 import com.salttysugar.blog.storage.storage.StorageConfig;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +37,10 @@ public class FileToApplicationFileWriter implements Writer<File, Mono<Applicatio
                 );
 
 
+    }
+
+    @Override
+    public boolean canHandle(Object source) {
+        return source instanceof File;
     }
 }

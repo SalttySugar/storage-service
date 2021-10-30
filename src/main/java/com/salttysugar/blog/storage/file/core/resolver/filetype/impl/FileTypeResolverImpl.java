@@ -1,6 +1,6 @@
 package com.salttysugar.blog.storage.file.core.resolver.filetype.impl;
 
-import com.salttysugar.blog.storage.file.constant.FileType;
+import com.salttysugar.blog.storage.file.domain.constant.FileType;
 import com.salttysugar.blog.storage.file.core.resolver.filetype.FileTypeResolver;
 import com.salttysugar.blog.storage.file.core.resolver.filetype.exception.UnsupportedFileTypeException;
 import lombok.RequiredArgsConstructor;
