@@ -2,7 +2,7 @@ package com.salttysugar.blog.storage.file.core.writer.impl;
 
 import com.salttysugar.blog.storage.file.core.writer.Writer;
 import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
-import com.salttysugar.blog.storage.storage.StorageConfig;
+import com.salttysugar.blog.storage.storage.config.StorageConfig;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

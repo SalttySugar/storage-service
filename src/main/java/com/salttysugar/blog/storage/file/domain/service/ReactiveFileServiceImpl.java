@@ -42,11 +42,12 @@ public class ReactiveFileServiceImpl implements ReactiveFileService {
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public Mono<ApplicationFile> store(Object source) {
         return writers.stream()
                 .filter(writer -> writer.canHandle(source))
                 .findFirst()
-                .map(writer -> (Writer<Object, Mono<ApplicationFile>>) writer)
+                .map(writer -> ( Writer<Object, Mono<ApplicationFile>>) writer)
                 .map(writer -> writer.write(source))
                 .map(writer -> Mono.just((ApplicationFile) ApplicationFileImpl.builder().build()))
                 .orElseThrow(() -> new RuntimeException("could not find writer to write file"));

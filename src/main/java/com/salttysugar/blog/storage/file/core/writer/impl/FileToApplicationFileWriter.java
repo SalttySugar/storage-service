@@ -5,7 +5,7 @@ import com.salttysugar.blog.storage.file.core.resolver.filetype.FileTypeResolver
 import com.salttysugar.blog.storage.file.core.writer.Writer;
 import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
 import com.salttysugar.blog.storage.file.domain.model.ApplicationFileImpl;
-import com.salttysugar.blog.storage.storage.StorageConfig;
+import com.salttysugar.blog.storage.storage.config.StorageConfig;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.salttysugar.blog.storage.storage;
+package com.salttysugar.blog.storage.storage.config;
 
 import java.nio.file.Path;
 

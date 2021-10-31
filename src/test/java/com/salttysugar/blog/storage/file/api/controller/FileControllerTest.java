@@ -4,7 +4,7 @@ import com.salttysugar.blog.storage.common.constant.API;
 import com.salttysugar.blog.storage.file.core.writer.Writer;
 import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
 import com.salttysugar.blog.storage.file.domain.service.ReactiveFileService;
-import com.salttysugar.blog.storage.storage.StorageConfig;
+import com.salttysugar.blog.storage.storage.config.StorageConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
