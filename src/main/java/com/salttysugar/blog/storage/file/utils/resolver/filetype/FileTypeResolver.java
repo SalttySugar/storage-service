@@ -1,7 +1,7 @@
-package com.salttysugar.blog.storage.file.core.resolver.filetype;
+package com.salttysugar.blog.storage.file.utils.resolver.filetype;
 
 import com.salttysugar.blog.storage.file.domain.constant.FileType;
-import com.salttysugar.blog.storage.file.core.resolver.filetype.exception.UnsupportedFileTypeException;
+import com.salttysugar.blog.storage.file.utils.resolver.filetype.exception.UnsupportedFileTypeException;
 
 import java.nio.file.Path;
 

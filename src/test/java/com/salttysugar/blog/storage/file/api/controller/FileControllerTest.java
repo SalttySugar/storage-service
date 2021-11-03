@@ -1,9 +1,8 @@
 package com.salttysugar.blog.storage.file.api.controller;
 
 import com.salttysugar.blog.storage.common.constant.API;
-import com.salttysugar.blog.storage.file.core.writer.Writer;
-import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
-import com.salttysugar.blog.storage.file.domain.service.ReactiveFileService;
+import com.salttysugar.blog.storage.file.domain.model.file.ApplicationFile;
+import com.salttysugar.blog.storage.file.domain.service.FileService;
 import com.salttysugar.blog.storage.storage.config.StorageConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,7 @@ class FileControllerTest {
     WebTestClient client;
 
     @Autowired
-    ReactiveFileService service;
+    FileService service;
 
     @TempDir
     File file;
@@ -62,20 +61,7 @@ class FileControllerTest {
     }
 
     @Test
-    void it_should_be_able_to_retrieve_uploaded_file(@Autowired Writer<Resource, Mono<ApplicationFile>> writer) {
+    void it_should_be_able_to_retrieve_uploaded_file() {
         Resource source = new FileSystemResource("src/test/resources/static/test_image_1.jpg");
-        writer.write(source)
-                .flatMap(service::save)
-                .doOnNext(file ->
-                        client.get()
-                                .uri(String.format("%s/%s", API.V1.FILE.BASE_URL, file.getId()))
-                                .exchange()
-                                .expectStatus().isOk()
-                                .expectBody()
-                                .jsonPath("$.id").exists()
-                                .consumeWith(System.out::println)
-                )
-                .block();
-
     }
 }

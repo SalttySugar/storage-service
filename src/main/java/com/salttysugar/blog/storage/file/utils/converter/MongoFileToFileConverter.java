@@ -1,8 +1,8 @@
-package com.salttysugar.blog.storage.file.converter;
+package com.salttysugar.blog.storage.file.utils.converter;
 
 import com.salttysugar.blog.storage.file.domain.constant.FileType;
-import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
-import com.salttysugar.blog.storage.file.domain.model.ApplicationFileImpl;
+import com.salttysugar.blog.storage.file.domain.model.file.ApplicationFile;
+import com.salttysugar.blog.storage.file.domain.model.file.ApplicationFileImpl;
 import com.salttysugar.blog.storage.file.persistance.MongoFile;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

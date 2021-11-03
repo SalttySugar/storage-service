@@ -3,10 +3,9 @@ package com.salttysugar.blog.storage.file.api.controller;
 import com.salttysugar.blog.storage.common.ApplicationConverter;
 import com.salttysugar.blog.storage.common.constant.API;
 import com.salttysugar.blog.storage.file.api.dto.FileDTO;
-import com.salttysugar.blog.storage.file.core.resolver.mediatype.MediaTypeResolver;
-import com.salttysugar.blog.storage.file.core.writer.Writer;
-import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
-import com.salttysugar.blog.storage.file.domain.service.ReactiveFileService;
+import com.salttysugar.blog.storage.file.domain.model.storable.Storable;
+import com.salttysugar.blog.storage.file.domain.service.FileService;
+import com.salttysugar.blog.storage.file.utils.resolver.mediatype.MediaTypeResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -21,9 +20,8 @@ import reactor.core.publisher.Mono;
 @RequestMapping(API.V1.FILE.BASE_URL)
 @RequiredArgsConstructor
 public class FileController {
-    private final ReactiveFileService service;
+    private final FileService service;
     private final ApplicationConverter converter;
-    private final Writer<FilePart, Mono<ApplicationFile>> writer;
     private final MediaTypeResolver mediaTypeResolver;
 
     @GetMapping
@@ -59,6 +57,7 @@ public class FileController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<FileDTO> upload(@RequestPart("file") Mono<FilePart> part) {
         return part
+                .map(converter.convert(Storable.class))
                 .flatMap(service::store)
                 .map(converter.convert(FileDTO.class));
     }

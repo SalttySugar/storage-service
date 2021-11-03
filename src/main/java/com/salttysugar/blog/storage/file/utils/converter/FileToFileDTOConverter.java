@@ -1,8 +1,8 @@
-package com.salttysugar.blog.storage.file.converter;
+package com.salttysugar.blog.storage.file.utils.converter;
 
 import com.salttysugar.blog.storage.common.constant.API;
 import com.salttysugar.blog.storage.file.api.dto.FileDTO;
-import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
+import com.salttysugar.blog.storage.file.domain.model.file.ApplicationFile;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

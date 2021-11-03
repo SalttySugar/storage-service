@@ -1,7 +1,7 @@
-package com.salttysugar.blog.storage.file.core.resolver.mediatype.impl;
+package com.salttysugar.blog.storage.file.utils.resolver.mediatype.impl;
 
 import com.salttysugar.blog.storage.file.domain.constant.FileType;
-import com.salttysugar.blog.storage.file.core.resolver.mediatype.MediaTypeResolver;
+import com.salttysugar.blog.storage.file.utils.resolver.mediatype.MediaTypeResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;

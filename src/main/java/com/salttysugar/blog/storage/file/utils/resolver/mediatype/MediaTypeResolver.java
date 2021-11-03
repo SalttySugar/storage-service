@@ -1,4 +1,4 @@
-package com.salttysugar.blog.storage.file.core.resolver.mediatype;
+package com.salttysugar.blog.storage.file.utils.resolver.mediatype;
 
 import com.salttysugar.blog.storage.file.domain.constant.FileType;
 import org.springframework.http.MediaType;

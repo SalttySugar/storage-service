@@ -1,8 +1,8 @@
-package com.salttysugar.blog.storage.file.core.resolver.filetype.impl;
+package com.salttysugar.blog.storage.file.utils.resolver.filetype.impl;
 
 import com.salttysugar.blog.storage.file.domain.constant.FileType;
-import com.salttysugar.blog.storage.file.core.resolver.filetype.FileTypeResolver;
-import com.salttysugar.blog.storage.file.core.resolver.filetype.exception.UnsupportedFileTypeException;
+import com.salttysugar.blog.storage.file.utils.resolver.filetype.FileTypeResolver;
+import com.salttysugar.blog.storage.file.utils.resolver.filetype.exception.UnsupportedFileTypeException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.compress.utils.FileNameUtils;
 import org.springframework.context.annotation.Bean;

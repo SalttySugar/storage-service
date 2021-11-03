@@ -1,4 +1,4 @@
-package com.salttysugar.blog.storage.file.domain.model;
+package com.salttysugar.blog.storage.file.domain.model.file;
 
 import com.salttysugar.blog.storage.file.domain.constant.FileType;
 

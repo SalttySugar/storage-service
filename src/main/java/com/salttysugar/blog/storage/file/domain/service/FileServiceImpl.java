@@ -1,9 +1,11 @@
 package com.salttysugar.blog.storage.file.domain.service;
 
 import com.salttysugar.blog.storage.common.ApplicationConverter;
-import com.salttysugar.blog.storage.file.core.writer.Writer;
-import com.salttysugar.blog.storage.file.domain.model.ApplicationFile;
-import com.salttysugar.blog.storage.file.domain.model.ApplicationFileImpl;
+import com.salttysugar.blog.storage.file.utils.resolver.filetype.FileTypeResolver;
+import com.salttysugar.blog.storage.file.domain.constant.FileType;
+import com.salttysugar.blog.storage.file.domain.model.file.ApplicationFile;
+import com.salttysugar.blog.storage.file.domain.model.storable.Storable;
+import com.salttysugar.blog.storage.storage.service.StorageService;
 import com.salttysugar.blog.storage.file.persistance.MongoFile;
 import com.salttysugar.blog.storage.file.persistance.MongoFileRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,14 +14,15 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Collection;
+import java.nio.file.Path;
 
 @Service
 @RequiredArgsConstructor
-public class ReactiveFileServiceImpl implements ReactiveFileService {
+public class FileServiceImpl implements FileService {
     private final MongoFileRepository repository;
     private final ApplicationConverter converter;
-    private final Collection<Writer<?, Mono<ApplicationFile>>> writers;
+    private final StorageService storage;
+    private final FileTypeResolver fileTypeResolver;
 
     @Override
     public Mono<ApplicationFile> getFileById(String id) {
@@ -32,25 +35,20 @@ public class ReactiveFileServiceImpl implements ReactiveFileService {
         throw new NotImplementedException();
     }
 
-    @Override
-    public Mono<ApplicationFile> save(ApplicationFile file) {
-        return Mono.just(file)
-                .map(converter.convert(MongoFile.class))
+    public Mono<ApplicationFile> store(Storable storable) {
+        String filename = storable.getFileName();
+        FileType fileType =  fileTypeResolver.resolve(Path.of(filename));
+
+        return Mono.just(storable)
+                .flatMap(storage::store)
+                .map(file -> MongoFile.builder()
+                        .size(file.getTotalSpace())
+                        .path(file.getPath())
+                        .name(filename)
+                        .type(fileType.toString())
+                        .build())
                 .flatMap(repository::save)
                 .map(converter.convert(ApplicationFile.class));
-    }
-
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Mono<ApplicationFile> store(Object source) {
-        return writers.stream()
-                .filter(writer -> writer.canHandle(source))
-                .findFirst()
-                .map(writer -> ( Writer<Object, Mono<ApplicationFile>>) writer)
-                .map(writer -> writer.write(source))
-                .map(writer -> Mono.just((ApplicationFile) ApplicationFileImpl.builder().build()))
-                .orElseThrow(() -> new RuntimeException("could not find writer to write file"));
     }
 
 
