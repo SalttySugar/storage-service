@@ -46,9 +46,10 @@ class FileControllerTest {
     @Test
     void it_should_be_able_to_upload_a_file() {
         var bodyBuilder = new MultipartBodyBuilder();
-        bodyBuilder.part("file", new FileSystemResource("/home/skoll/Desktop/model .jpg"));
+        bodyBuilder.part("file", new FileSystemResource("src/test/resources/static/test_image_1.jpg"));
 
-        var result = client.post()
+
+        client.post()
                 .uri(API.V1.FILE.BASE_URL)
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
