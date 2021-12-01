@@ -1,9 +1,9 @@
 package com.salttysugar.blog.storage.api.controller;
 
+import com.salttysugar.blog.storage.api.dto.RequestFileDTO;
+import com.salttysugar.blog.storage.api.dto.ResponseFileDTO;
 import com.salttysugar.blog.storage.common.ApplicationConverter;
 import com.salttysugar.blog.storage.common.constant.API;
-import com.salttysugar.blog.storage.api.dto.ResponseFileDTO;
-import com.salttysugar.blog.storage.model.Storable;
 import com.salttysugar.blog.storage.model.impl.StorableFilePart;
 import com.salttysugar.blog.storage.service.FileService;
 import com.salttysugar.blog.storage.utils.resolver.mediatype.MediaTypeResolver;
@@ -37,6 +37,13 @@ public class FileController {
                 .map(converter.convert(ResponseFileDTO.class));
     }
 
+    @PutMapping("/{id}/meta")
+    public Mono<ResponseFileDTO> updateFileMeta(@RequestBody RequestFileDTO dto, @PathVariable String id) {
+        return service.update(id, dto)
+                .map(converter.convert(ResponseFileDTO.class));
+
+    }
+
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Resource>> retrieve(@PathVariable String id) {
         return service.getById(id)
@@ -61,6 +68,12 @@ public class FileController {
                 .map(StorableFilePart::new)
                 .flatMap(service::store)
                 .map(converter.convert(ResponseFileDTO.class));
+    }
+
+
+    @DeleteMapping("/{id}")
+    Mono<Void> delete(@PathVariable String id) {
+        return service.deleteById(id);
     }
 
 }

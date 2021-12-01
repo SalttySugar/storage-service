@@ -11,12 +11,11 @@ import com.salttysugar.blog.storage.service.FileService;
 import com.salttysugar.blog.storage.service.StorageService;
 import com.salttysugar.blog.storage.utils.resolver.filetype.FileTypeResolver;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static org.apache.logging.log4j.ThreadContext.peek;
+import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
@@ -57,13 +56,42 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Mono<ApplicationFile> update(RequestFileDTO dto) {
-        throw new NotImplementedException();
+    public Mono<ApplicationFile> update(String id, Storable storable) {
+        return service.store(storable)
+                .map(file -> {
+                    FileType fileType = resolver.resolve(file.toPath());
+                    return MongoFile.builder()
+                            .id(id)
+                            .name(storable.getFileName())
+                            .path(file.toPath().toString())
+                            .size(file.getTotalSpace())
+                            .type(fileType.toString())
+                            .build();
+                })
+                .flatMap(repository::save)
+                .map(converter.convert(ApplicationFile.class));
     }
+
+    @Override
+    public Mono<ApplicationFile> update(String id, RequestFileDTO dto) {
+        return getById(id)
+                .doOnNext(applicationFile -> applicationFile.setName(dto.getName()))
+                .map(converter.convert(MongoFile.class))
+                .flatMap(repository::save)
+                .map(converter.convert(ApplicationFile.class));
+    }
+
 
     @Override
     public Mono<Void> deleteById(String id) {
         return getById(id)
+                .doOnNext(file -> {
+                    try {
+                        service.delete(file.getPath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                })
                 .map(ApplicationFile::getId)
                 .flatMap(repository::deleteById);
     }

@@ -10,7 +10,8 @@ public interface FileService {
     Mono<ApplicationFile> getById(String id);
     Mono<ApplicationFile> store(Storable storable);
     Flux<ApplicationFile> findAll();
-    Mono<ApplicationFile> update(RequestFileDTO dto);
+    Mono<ApplicationFile> update(String id, Storable storable);
+    Mono<ApplicationFile> update(String id, RequestFileDTO dto);
     Mono<Void> deleteById(String id);
 
 }
