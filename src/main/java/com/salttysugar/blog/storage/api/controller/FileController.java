@@ -1,11 +1,11 @@
 package com.salttysugar.blog.storage.api.controller;
 
 import com.salttysugar.blog.storage.api.dto.RequestFileDTO;
-import com.salttysugar.blog.storage.api.dto.ResponseFileDTO;
+import com.salttysugar.blog.storage.api.dto.FileDTO;
 import com.salttysugar.blog.storage.common.ApplicationConverter;
 import com.salttysugar.blog.storage.common.constant.API;
 import com.salttysugar.blog.storage.model.impl.StorableFilePart;
-import com.salttysugar.blog.storage.service.FileService;
+import com.salttysugar.blog.storage.services.FileService;
 import com.salttysugar.blog.storage.utils.resolver.mediatype.MediaTypeResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -26,21 +26,21 @@ public class FileController {
     private final MediaTypeResolver mediaTypeResolver;
 
     @GetMapping
-    public Flux<ResponseFileDTO> list() {
+    public Flux<FileDTO> list() {
         return service.findAll()
-                .map(converter.convert(ResponseFileDTO.class));
+                .map(converter.convert(FileDTO.class));
     }
 
     @GetMapping("/{id}/meta")
-    public Mono<ResponseFileDTO> retrieveMeta(@PathVariable String id) {
+    public Mono<FileDTO> retrieveMeta(@PathVariable String id) {
         return service.getById(id)
-                .map(converter.convert(ResponseFileDTO.class));
+                .map(converter.convert(FileDTO.class));
     }
 
     @PutMapping("/{id}/meta")
-    public Mono<ResponseFileDTO> updateFileMeta(@RequestBody RequestFileDTO dto, @PathVariable String id) {
+    public Mono<FileDTO> updateFileMeta(@RequestBody RequestFileDTO dto, @PathVariable String id) {
         return service.update(id, dto)
-                .map(converter.convert(ResponseFileDTO.class));
+                .map(converter.convert(FileDTO.class));
 
     }
 
@@ -63,11 +63,11 @@ public class FileController {
 
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Mono<ResponseFileDTO> upload(@RequestPart("file") Mono<FilePart> part) {
+    public Mono<FileDTO> upload(@RequestPart("file") Mono<FilePart> part) {
         return part
                 .map(StorableFilePart::new)
                 .flatMap(service::store)
-                .map(converter.convert(ResponseFileDTO.class));
+                .map(converter.convert(FileDTO.class));
     }
 
 

@@ -1,5 +1,6 @@
-package com.salttysugar.blog.storage.config;
+package com.salttysugar.blog.storage.configs;
 
+import com.salttysugar.blog.storage.common.constant.API;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -14,7 +15,7 @@ public class Springfox2SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.ant(API.V1.FILE.BASE_URL + "/**"))
                 .build();
     }
 }

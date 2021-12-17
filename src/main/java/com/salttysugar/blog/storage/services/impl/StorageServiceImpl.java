@@ -1,8 +1,8 @@
-package com.salttysugar.blog.storage.service.impl;
+package com.salttysugar.blog.storage.services.impl;
 
 import com.salttysugar.blog.storage.model.Storable;
-import com.salttysugar.blog.storage.config.StorageConfig;
-import com.salttysugar.blog.storage.service.StorageService;
+import com.salttysugar.blog.storage.configs.StorageConfig;
+import com.salttysugar.blog.storage.services.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

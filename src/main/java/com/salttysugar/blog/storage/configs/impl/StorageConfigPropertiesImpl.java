@@ -1,6 +1,6 @@
-package com.salttysugar.blog.storage.config.impl;
+package com.salttysugar.blog.storage.configs.impl;
 
-import com.salttysugar.blog.storage.config.StorageConfig;
+import com.salttysugar.blog.storage.configs.StorageConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

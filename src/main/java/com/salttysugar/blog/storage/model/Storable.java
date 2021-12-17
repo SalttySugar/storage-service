@@ -6,5 +6,5 @@ import java.nio.file.Path;
 
 public interface Storable {
     String getFileName();
-    Mono<Void> moveTo(Path path );
+    Mono<Void> moveTo(Path path);
 }

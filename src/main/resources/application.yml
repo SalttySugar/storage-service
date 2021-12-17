@@ -1,9 +1,1 @@
-spring:
-  cloud:
-    config:
-      enabled: false
-eureka:
-  client:
-    enabled: false
-
-folder: "/home/skoll/Desktop"
+folder: ${env.FOLDER:/home/skoll/Desktop}

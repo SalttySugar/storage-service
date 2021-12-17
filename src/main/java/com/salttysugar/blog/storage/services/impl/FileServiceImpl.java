@@ -1,4 +1,4 @@
-package com.salttysugar.blog.storage.service.impl;
+package com.salttysugar.blog.storage.services.impl;
 
 import com.salttysugar.blog.storage.api.dto.RequestFileDTO;
 import com.salttysugar.blog.storage.common.ApplicationConverter;
@@ -7,8 +7,8 @@ import com.salttysugar.blog.storage.model.FileType;
 import com.salttysugar.blog.storage.model.Storable;
 import com.salttysugar.blog.storage.persistance.MongoFile;
 import com.salttysugar.blog.storage.persistance.MongoFileRepository;
-import com.salttysugar.blog.storage.service.FileService;
-import com.salttysugar.blog.storage.service.StorageService;
+import com.salttysugar.blog.storage.services.FileService;
+import com.salttysugar.blog.storage.services.StorageService;
 import com.salttysugar.blog.storage.utils.resolver.filetype.FileTypeResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
