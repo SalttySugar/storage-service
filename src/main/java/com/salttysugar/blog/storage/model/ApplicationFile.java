@@ -1,28 +1,23 @@
 package com.salttysugar.blog.storage.model;
 
-import java.io.IOException;
-import java.nio.file.Path;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public interface ApplicationFile {
-    String getId();
+import java.util.Date;
 
-    void setId(String id);
-
-    String getName();
-
-    void setName(String name);
-
-    byte[] getContent() throws IOException;
-
-    void setContent(byte[] content) throws IOException;
-
-    Path getPath();
-
-    void setPath(Path path);
-
-
-    String getExtension();
-
-    void setExtension(String extension);
-
+@Document
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class ApplicationFile {
+    String id;
+    String name;
+    String path;
+    String extension;
+    Date uploadedOn;
+    String ownerId;
 }

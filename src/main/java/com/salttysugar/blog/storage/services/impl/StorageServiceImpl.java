@@ -1,12 +1,11 @@
 package com.salttysugar.blog.storage.services.impl;
 
-import com.salttysugar.blog.storage.api.dto.RequestFileDTO;
+import com.salttysugar.blog.storage.api.dto.UploadFileDTO;
 import com.salttysugar.blog.storage.common.ApplicationConverter;
 import com.salttysugar.blog.storage.configs.StorageConfig;
 import com.salttysugar.blog.storage.exceptions.FileNotFoundException;
 import com.salttysugar.blog.storage.model.ApplicationFile;
 import com.salttysugar.blog.storage.model.Storable;
-import com.salttysugar.blog.storage.persistance.MongoFile;
 import com.salttysugar.blog.storage.persistance.MongoFileRepository;
 import com.salttysugar.blog.storage.services.ApplicationFileCriteria;
 import com.salttysugar.blog.storage.services.StorageService;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 
@@ -31,7 +29,6 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public Mono<ApplicationFile> findById(String id) {
         return repository.findById(id)
-                .map(converter.convert(ApplicationFile.class))
                 .switchIfEmpty(Mono.error(new FileNotFoundException(id)));
     }
 
@@ -46,7 +43,7 @@ public class StorageServiceImpl implements StorageService {
         String extension = FilenameUtils.getExtension(name);
         Path path = config.getFolder().resolve(UUID.randomUUID().toString());
         return storable.moveTo(path)
-                .then(Try.ofCallable(() -> Mono.just(MongoFile.builder()
+                .then(Try.ofCallable(() -> Mono.just(ApplicationFile.builder()
                                 .name(name)
                                 .extension(extension)
                                 .path(path.toString())
@@ -55,6 +52,11 @@ public class StorageServiceImpl implements StorageService {
                 )
                 .flatMap(repository::save)
                 .map(converter.convert(ApplicationFile.class));
+    }
+
+    @Override
+    public Mono<ApplicationFile> store(UploadFileDTO dto) {
+        return store(dto.getFile());
     }
 
     @Override
@@ -70,7 +72,7 @@ public class StorageServiceImpl implements StorageService {
 
 
     @Override
-    public Mono<ApplicationFile> update(String id, RequestFileDTO dto) {
+    public Mono<ApplicationFile> update(String id, UploadFileDTO dto) {
         throw new RuntimeException("not implemented");
     }
 
