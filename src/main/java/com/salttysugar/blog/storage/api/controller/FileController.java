@@ -64,13 +64,6 @@ public class FileController {
     }
 
 
-//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public Mono<FileDTO> upload(@RequestPart("file") Mono<FilePart> part) {
-//        return part
-//                .map(StorableFilePart::new)
-//                .flatMap(service::store)
-//                .map(converter.convert(FileDTO.class));
-//    }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Mono<FileDTO> upload(@Valid @ModelAttribute UploadFileDTO dto) {

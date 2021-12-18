@@ -18,6 +18,7 @@ public class ApplicationFile {
     String name;
     String path;
     String extension;
-    Date uploadedOn;
+    @Builder.Default
+    Date uploadedOn = new Date();
     String ownerId;
 }

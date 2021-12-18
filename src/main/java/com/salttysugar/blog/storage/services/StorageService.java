@@ -11,7 +11,6 @@ public interface StorageService {
 
     Mono<ApplicationFile> findOne(ApplicationFileCriteria criteria);
 
-    Mono<ApplicationFile> store(Storable storable);
     Mono<ApplicationFile> store(UploadFileDTO dto);
 
     Flux<ApplicationFile> findAll();
