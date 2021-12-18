@@ -20,8 +20,6 @@ public interface ApplicationFile {
 
     void setPath(Path path);
 
-    long getSize() throws IOException;
-
 
     String getExtension();
 

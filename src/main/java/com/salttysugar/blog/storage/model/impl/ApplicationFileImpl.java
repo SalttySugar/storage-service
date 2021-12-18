@@ -1,10 +1,7 @@
 package com.salttysugar.blog.storage.model.impl;
 
 import com.salttysugar.blog.storage.model.ApplicationFile;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,8 +32,4 @@ public class ApplicationFileImpl implements ApplicationFile {
         Files.write(path, content);
     }
 
-    @Override
-    public long getSize() throws IOException {
-        return Files.size(path);
-    }
 }

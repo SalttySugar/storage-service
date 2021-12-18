@@ -49,7 +49,6 @@ public class StorageServiceImpl implements StorageService {
                 .then(Try.ofCallable(() -> Mono.just(MongoFile.builder()
                                 .name(name)
                                 .extension(extension)
-//                                .size(Files.size(path))
                                 .path(path.toString())
                                 .build())
                         ).get()

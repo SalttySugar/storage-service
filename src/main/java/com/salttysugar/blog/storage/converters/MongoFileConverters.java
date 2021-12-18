@@ -14,7 +14,6 @@ public abstract class MongoFileConverters {
             return Try.ofCallable(() -> MongoFile.builder()
                     .name(source.getName())
                     .path(source.getPath().toString())
-                    .size(source.getSize())
                     .build()
             ).get();
         }

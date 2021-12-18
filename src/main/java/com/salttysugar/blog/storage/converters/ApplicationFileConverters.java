@@ -32,7 +32,6 @@ public abstract class ApplicationFileConverters {
         public FileDTO convert(ApplicationFile source) {
             return Try.ofCallable(() -> FileDTO.builder()
                     .id(source.getId())
-                    .size(source.getSize())
                     .name(source.getName())
                     .extension(source.getExtension())
                     .build()
