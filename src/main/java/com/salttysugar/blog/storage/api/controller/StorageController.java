@@ -21,10 +21,10 @@ import javax.validation.Valid;
 import java.nio.file.Path;
 
 @RestController
-@RequestMapping(API.V1.FILE.BASE_URL)
+@RequestMapping(API.PATH)
 @Validated
 @RequiredArgsConstructor
-public class FileController {
+public class StorageController {
     private final StorageService service;
     private final ApplicationConverter converter;
 

@@ -4,10 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StorageApplicationTests {
+class StorageApplicationTests extends BaseIntegrationTest {
 
     @Test
     void contextLoads() {
     }
+
 
 }

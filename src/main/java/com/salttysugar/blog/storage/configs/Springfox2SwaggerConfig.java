@@ -15,7 +15,7 @@ public class Springfox2SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant(API.V1.FILE.BASE_URL + "/**"))
+                .paths(PathSelectors.ant(API.PATH + "/**"))
                 .build();
     }
 }

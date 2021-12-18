@@ -12,6 +12,12 @@ import com.salttysugar.blog.storage.services.StorageService;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.convert.MongoExampleMapper;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -26,6 +32,7 @@ public class StorageServiceImpl implements StorageService {
     private final MongoFileRepository repository;
     private final ApplicationConverter converter;
     private final StorageConfig config;
+    private final ReactiveMongoTemplate template;
 
     @Override
     public Mono<ApplicationFile> findById(String id) {
@@ -69,7 +76,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public Flux<ApplicationFile> findAll(ApplicationFileCriteria criteria) {
-        throw new RuntimeException("not implemented");
+        return template.find(Query.query(new Criteria()), ApplicationFile.class);
     }
 
 
