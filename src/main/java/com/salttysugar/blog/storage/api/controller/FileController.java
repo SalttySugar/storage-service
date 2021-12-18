@@ -5,12 +5,15 @@ import com.salttysugar.blog.storage.api.dto.FileDTO;
 import com.salttysugar.blog.storage.common.ApplicationConverter;
 import com.salttysugar.blog.storage.common.constant.API;
 import com.salttysugar.blog.storage.model.impl.StorableFilePart;
-import com.salttysugar.blog.storage.services.FileService;
-import com.salttysugar.blog.storage.utils.resolver.mediatype.MediaTypeResolver;
+import com.salttysugar.blog.storage.services.StorageService;
+import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.server.MimeMappings;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +24,8 @@ import reactor.core.publisher.Mono;
 @RequestMapping(API.V1.FILE.BASE_URL)
 @RequiredArgsConstructor
 public class FileController {
-    private final FileService service;
+    private final StorageService service;
     private final ApplicationConverter converter;
-    private final MediaTypeResolver mediaTypeResolver;
 
     @GetMapping
     public Flux<FileDTO> list() {
@@ -33,7 +35,7 @@ public class FileController {
 
     @GetMapping("/{id}/meta")
     public Mono<FileDTO> retrieveMeta(@PathVariable String id) {
-        return service.getById(id)
+        return service.findById(id)
                 .map(converter.convert(FileDTO.class));
     }
 
@@ -46,18 +48,17 @@ public class FileController {
 
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Resource>> retrieve(@PathVariable String id) {
-        return service.getById(id)
+        return service.findById(id)
                 .map(applicationFile -> {
-                    var path = applicationFile.getPath();
-                    var fileType = applicationFile.getType();
-                    var resource = new FileSystemResource(path);
-                    var contentType = mediaTypeResolver.resolve(fileType)
-                            .orElseThrow(() -> new RuntimeException("Could not retrieve file type"));
+                    var resource = Try.ofCallable(() -> new ByteArrayResource(applicationFile.getContent()))
+                            .get();
+
+                    var contentType = MediaTypeFactory.getMediaType(applicationFile.getName())
+                            .orElse(MediaType.APPLICATION_OCTET_STREAM);
 
                     return ResponseEntity.ok()
                             .contentType(contentType)
                             .body(resource);
-
                 });
     }
 

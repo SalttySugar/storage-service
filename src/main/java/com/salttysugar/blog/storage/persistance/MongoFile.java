@@ -16,5 +16,5 @@ public class MongoFile {
     String name;
     String path;
     long size;
-    String type;
+    String extension;
 }

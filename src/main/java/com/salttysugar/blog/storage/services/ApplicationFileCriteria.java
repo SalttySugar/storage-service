@@ -1,19 +1,18 @@
-package com.salttysugar.blog.storage.api.dto;
+package com.salttysugar.blog.storage.services;
 
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("File")
-public final class FileDTO {
+public class ApplicationFileCriteria {
     String id;
     String name;
     String extension;
-    long size;
+    Long size;
+
 }

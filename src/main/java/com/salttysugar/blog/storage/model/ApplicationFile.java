@@ -23,8 +23,8 @@ public interface ApplicationFile {
     long getSize() throws IOException;
 
 
-    FileType getType();
+    String getExtension();
 
-    void setType(FileType type);
+    void setExtension(String extension);
 
 }

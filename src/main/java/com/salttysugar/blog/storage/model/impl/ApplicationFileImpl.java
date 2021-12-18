@@ -1,6 +1,5 @@
 package com.salttysugar.blog.storage.model.impl;
 
-import com.salttysugar.blog.storage.model.FileType;
 import com.salttysugar.blog.storage.model.ApplicationFile;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +17,7 @@ import java.nio.file.Path;
 public class ApplicationFileImpl implements ApplicationFile {
     String id;
     String name;
-    FileType type;
+    String extension;
     Path path;
 
     @Override

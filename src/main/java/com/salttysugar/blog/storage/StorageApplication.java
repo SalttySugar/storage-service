@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FileServiceApplication {
+public class StorageApplication {
     public static void main(String[] args) {
-        SpringApplication.run(FileServiceApplication.class, args);
+        SpringApplication.run(StorageApplication.class, args);
     }
 }

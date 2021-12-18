@@ -1,18 +1,24 @@
 package com.salttysugar.blog.storage.services;
 
+import com.salttysugar.blog.storage.api.dto.RequestFileDTO;
+import com.salttysugar.blog.storage.model.ApplicationFile;
 import com.salttysugar.blog.storage.model.Storable;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 public interface StorageService {
-    Mono<File> store(Storable storable);
+    Mono<ApplicationFile> findById(String id);
 
-    default Mono<Void> delete(Path path) throws IOException {
-        Files.delete(path);
-        return Mono.empty();
-    }
+    Mono<ApplicationFile> findOne(ApplicationFileCriteria criteria);
+
+    Mono<ApplicationFile> store(Storable storable);
+
+    Flux<ApplicationFile> findAll();
+
+    Flux<ApplicationFile> findAll(ApplicationFileCriteria criteria);
+
+    Mono<ApplicationFile> update(String id, RequestFileDTO dto);
+
+    Mono<Void> deleteById(String id);
+
 }

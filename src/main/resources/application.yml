@@ -1,1 +1,1 @@
-folder: ${env.FOLDER:/home/skoll/Desktop}
+folder: ${env.FOLDER:/tmp}
