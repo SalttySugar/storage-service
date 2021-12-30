@@ -29,6 +29,7 @@ public class StorageServiceImpl implements StorageService {
     private final MongoFileRepository repository;
     private final ApplicationConverter converter;
     private final StorageConfig config;
+
     private final ReactiveMongoTemplate template;
 
     @Override
@@ -36,7 +37,6 @@ public class StorageServiceImpl implements StorageService {
         return repository.findById(id)
                 .switchIfEmpty(Mono.error(new FileNotFoundException(id)));
     }
-
 
 
     @Override
@@ -68,10 +68,14 @@ public class StorageServiceImpl implements StorageService {
     }
 
 
-
     @Override
     public Mono<ApplicationFile> update(String id, UploadFileDTO dto) {
         throw new RuntimeException("not implemented");
+    }
+
+    @Override
+    public Mono<Long> count() {
+        return repository.count();
     }
 
     @Override
@@ -79,5 +83,10 @@ public class StorageServiceImpl implements StorageService {
         return repository.findById(id)
                 .switchIfEmpty(Mono.error(new FileNotFoundException(id)))
                 .flatMap(repository::delete);
+    }
+
+    @Override
+    public Mono<Void> deleteAll() {
+        return repository.deleteAll();
     }
 }

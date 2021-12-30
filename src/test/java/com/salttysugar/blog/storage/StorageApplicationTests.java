@@ -3,8 +3,10 @@ package com.salttysugar.blog.storage;
 import com.salttysugar.blog.storage.api.dto.FileDTO;
 import com.salttysugar.blog.storage.api.dto.UploadFileDTO;
 import com.salttysugar.blog.storage.common.constant.API;
+import com.salttysugar.blog.storage.common.constant.Headers;
 import com.salttysugar.blog.storage.model.StorableResourceImpl;
 import com.salttysugar.blog.storage.services.StorageService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,11 @@ class StorageApplicationTests extends BaseIntegrationTest {
     }
 
 
+    @BeforeEach
+    void tearDown() {
+        service.deleteAll().block();
+    }
+
     @Nested
     public class StorageApplicationCrudTests {
         @Test
@@ -68,11 +75,6 @@ class StorageApplicationTests extends BaseIntegrationTest {
 
 
         @Test
-        void shouldUpdateFileName() {
-
-        }
-
-        @Test
         void shouldFindFileById() {
             var file = service.store(UploadFileDTO.builder()
                     .file(new StorableResourceImpl(Helpers.getResource("test-image-1.jpg")))
@@ -92,12 +94,77 @@ class StorageApplicationTests extends BaseIntegrationTest {
 
         @Test
         void shouldRetrieveCollectionOfFiles() {
-            throw new RuntimeException("not implemented");
+            service.store(UploadFileDTO.builder()
+                    .file(new StorableResourceImpl(Helpers.getResource("test-image-1.jpg")))
+                    .owner_id("test-owner-id")
+                    .build())
+                    .block();
+
+            service.store(UploadFileDTO.builder()
+                    .file(new StorableResourceImpl(Helpers.getResource("test-image-2.jpg")))
+                    .owner_id("test-owner-id")
+                    .build())
+                    .block();
+
+
+            service.store(UploadFileDTO.builder()
+                    .file(new StorableResourceImpl(Helpers.getResource("test-image-3.jpg")))
+                    .owner_id("test-owner-id")
+                    .build())
+                    .block();
+
+            service.store(UploadFileDTO.builder()
+                    .file(new StorableResourceImpl(Helpers.getResource("test-image-4.jpg")))
+                    .owner_id("test-owner-id")
+                    .build())
+                    .block();
+
+            client.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path(API.PATH)
+                            .queryParam("limit", 2)
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .exchange()
+                    .expectHeader().value(Headers.TOTAL_COUNT, is("4"))
+                    .expectBodyList(FileDTO.class).hasSize(2);
+
+            client.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path(API.PATH)
+                            .queryParam("limit", 2)
+                            .queryParam("offset", 2)
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .exchange()
+                    .expectHeader().value(Headers.TOTAL_COUNT, is("4"))
+                    .expectBodyList(FileDTO.class).hasSize(2);
+
+            client.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path(API.PATH)
+                            .queryParam("limit", 2)
+                            .queryParam("offset", 4)
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .exchange()
+                    .expectHeader().value(Headers.TOTAL_COUNT, is("4"))
+                    .expectBodyList(FileDTO.class).hasSize(0);
         }
 
         @Test
         void shouldDeleteFileById() {
-            throw new RuntimeException("not implemented");
+            var file = service.store(UploadFileDTO.builder()
+                    .file(new StorableResourceImpl(Helpers.getResource("test-image-1.jpg")))
+                    .owner_id("test-owner-id")
+                    .build())
+                    .block();
+
+            client.delete()
+                    .uri(API.PATH + "/" + file.getId())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .exchange()
+                    .expectStatus().isOk();
         }
     }
 

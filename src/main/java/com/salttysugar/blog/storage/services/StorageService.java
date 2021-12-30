@@ -9,7 +9,6 @@ import reactor.core.publisher.Mono;
 public interface StorageService {
     Mono<ApplicationFile> findById(String id);
 
-
     Mono<ApplicationFile> store(UploadFileDTO dto);
 
     Flux<ApplicationFile> findAll();
@@ -17,6 +16,10 @@ public interface StorageService {
 
     Mono<ApplicationFile> update(String id, UploadFileDTO dto);
 
+    Mono<Long> count();
+
     Mono<Void> deleteById(String id);
+
+    Mono<Void> deleteAll();
 
 }

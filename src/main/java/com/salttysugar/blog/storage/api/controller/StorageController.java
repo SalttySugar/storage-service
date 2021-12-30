@@ -4,6 +4,7 @@ import com.salttysugar.blog.storage.api.dto.FileDTO;
 import com.salttysugar.blog.storage.api.dto.UploadFileDTO;
 import com.salttysugar.blog.storage.common.ApplicationConverter;
 import com.salttysugar.blog.storage.common.constant.API;
+import com.salttysugar.blog.storage.common.constant.Headers;
 import com.salttysugar.blog.storage.services.StorageService;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +15,11 @@ import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping(API.PATH)
@@ -29,9 +30,21 @@ public class StorageController {
     private final ApplicationConverter converter;
 
     @GetMapping
-    public Flux<FileDTO> list() {
-        return service.findAll()
-                .map(converter.convert(FileDTO.class));
+    public Mono<ResponseEntity<List<FileDTO>>> list(
+            @RequestParam(required = false, defaultValue = "10") Long limit,
+            @RequestParam(required = false, defaultValue = "0") Long offset
+    ) {
+        return Mono.fromCallable(ResponseEntity::ok)
+                .flatMap(response -> service.count()
+                        .map(total -> response.header(Headers.TOTAL_COUNT, String.valueOf(total)))
+                )
+                .flatMap(response -> service.findAll()
+                        .skip(offset)
+                        .take(limit)
+                        .map(converter.convert(FileDTO.class))
+                        .collectList()
+                        .map(response::body)
+                );
     }
 
     @GetMapping("/{id}/meta")
@@ -62,7 +75,6 @@ public class StorageController {
                             .body(resource);
                 });
     }
-
 
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
