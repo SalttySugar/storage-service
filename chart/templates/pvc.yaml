@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{include "chart.fullname" . | toString }}
+  labels: {{include "chart.labels" . | nindent 8}}
+  annotations: {{ toYaml .Values.pvc.annotations}}
+spec:
+  accessModes: {{  .Values.pvc.accessModes }}
+  storageClassName: {{toString .Values.pvc.storageClassName}}
+  resources:
+    {{- toYaml .Values.pvc.resources | nindent 4 }}
