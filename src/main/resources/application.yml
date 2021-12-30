@@ -1,1 +1,7 @@
-folder: ${env.FOLDER:/tmp}
+application:
+  storage:
+    config:
+      directory: /tmp
+spring:
+  codec:
+    max-in-memory-size: 10MB

@@ -10,11 +10,11 @@ import java.nio.file.Path;
 @Configuration
 @PropertySource(value = "classpath:application.yml")
 public class StorageConfigPropertiesImpl implements StorageConfig {
-    @Value("${folder}")
-    String folder;
+    @Value("${application.storage.config.directory}")
+    String directory;
 
     @Override
-    public Path getFolder() {
-        return Path.of(folder);
+    public Path getDirectory() {
+        return Path.of(directory);
     }
 }

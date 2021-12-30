@@ -12,10 +12,7 @@ import com.salttysugar.blog.storage.services.StorageService;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-import org.springframework.data.mongodb.core.convert.MongoExampleMapper;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -54,7 +51,7 @@ public class StorageServiceImpl implements StorageService {
 
 
         String extension = FilenameUtils.getExtension(storable.getFileName());
-        Path path = config.getFolder().resolve(UUID.randomUUID().toString());
+        Path path = config.getDirectory().resolve(UUID.randomUUID().toString());
         return storable.moveTo(path)
                 .then(Try.ofCallable(() -> Mono.just(ApplicationFile.builder()
                                 .name(name)

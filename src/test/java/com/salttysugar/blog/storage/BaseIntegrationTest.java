@@ -12,7 +12,7 @@ import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
 @Testcontainers
-@ContextConfiguration(classes = BaseIntegrationTest.Initializer.class)
+@ContextConfiguration(initializers = BaseIntegrationTest.Initializer.class)
 public abstract class BaseIntegrationTest {
     @Container
     public static GenericContainer<?> mongoDbContainer = new GenericContainer<>(DockerImageName.parse("bitnami/mongodb"))
@@ -27,6 +27,7 @@ public abstract class BaseIntegrationTest {
             TestPropertyValues.of(
                     "spring.data.mongodb.username=root",
                     "spring.data.mongodb.password=test",
+                    "spring.data.mongodb.database=admin",
                     "spring.data.mongodb.port=" + mongoDbContainer.getMappedPort(27017)
             ).applyTo(configurableApplicationContext.getEnvironment());
         }
