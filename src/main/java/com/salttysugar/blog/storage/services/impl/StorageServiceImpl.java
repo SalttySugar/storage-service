@@ -37,10 +37,6 @@ public class StorageServiceImpl implements StorageService {
                 .switchIfEmpty(Mono.error(new FileNotFoundException(id)));
     }
 
-    @Override
-    public Mono<ApplicationFile> findOne(ApplicationFileCriteria criteria) {
-        throw new RuntimeException("not implemented");
-    }
 
 
     @Override
@@ -71,10 +67,6 @@ public class StorageServiceImpl implements StorageService {
                 .map(converter.convert(ApplicationFile.class));
     }
 
-    @Override
-    public Flux<ApplicationFile> findAll(ApplicationFileCriteria criteria) {
-        return template.find(Query.query(new Criteria()), ApplicationFile.class);
-    }
 
 
     @Override

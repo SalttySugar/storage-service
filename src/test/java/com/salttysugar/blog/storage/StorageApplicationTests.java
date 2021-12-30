@@ -102,29 +102,4 @@ class StorageApplicationTests extends BaseIntegrationTest {
     }
 
 
-    public class StorageApplicationFilterTest {
-
-        @Test
-        void shouldRetrieveCollectionOfFilesThatMatchSpecificExtension() {
-            throw new RuntimeException("not implemented");
-        }
-
-        @Test
-        void shouldRetrieveCollectionOfFilesThatMatchSpecificExtensions() {
-            throw new RuntimeException("not implemented");
-        }
-
-
-        @Test
-        void shouldRetrieveCollectionOfFilesThatMatchSpecificIds() {
-            throw new RuntimeException("not implemented");
-        }
-
-
-        @Test
-        void shouldRetrieveCollectionOfFilesUploadedBySpecificUser() {
-            throw new RuntimeException("not implemented");
-        }
-    }
-
 }

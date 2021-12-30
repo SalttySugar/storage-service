@@ -9,13 +9,11 @@ import reactor.core.publisher.Mono;
 public interface StorageService {
     Mono<ApplicationFile> findById(String id);
 
-    Mono<ApplicationFile> findOne(ApplicationFileCriteria criteria);
 
     Mono<ApplicationFile> store(UploadFileDTO dto);
 
     Flux<ApplicationFile> findAll();
 
-    Flux<ApplicationFile> findAll(ApplicationFileCriteria criteria);
 
     Mono<ApplicationFile> update(String id, UploadFileDTO dto);
 
