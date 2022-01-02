@@ -1,9 +1,7 @@
-spring:
-  cloud:
+application:
+  storage:
     config:
-      enabled: false
-eureka:
-  client:
-    enabled: false
-
-folder: "/home/skoll/Desktop"
+      directory: /tmp
+spring:
+  codec:
+    max-in-memory-size: 10MB

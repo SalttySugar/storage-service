@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "application.storage.config.directory",
+      "type": "java.lang.String",
+      "description": "Directory on the hard drive where to upload files."
+  }
+] }
